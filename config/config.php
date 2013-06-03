@@ -11,6 +11,7 @@
  * @filesource
  */
 
+$GLOBALS['TL_CRON']['hourly'][]                     = array('Simplify', 'checkFeaturedStop');
 
 $GLOBALS['TL_HOOKS']['parseArticles'][]             = array('Simplify\Simplify', 'parseArticlesHook');
 $GLOBALS['FE_MOD']['news']['simplify_sorted_news']  = 'ModuleNewsSortedList';

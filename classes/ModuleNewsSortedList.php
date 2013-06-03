@@ -144,7 +144,7 @@ class ModuleNewsSortedList extends \ModuleNewsList {
 		}
 
 		$this->Template->archives = $this->news_archives;
-		$this->Template->empty = $GLOBALS['TL_LANG']['MSC']['emptyList'];
+		$this->Template->empty    = $GLOBALS['TL_LANG']['MSC']['emptyList'];
 	}
 
 }

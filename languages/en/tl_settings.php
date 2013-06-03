@@ -18,5 +18,4 @@ $GLOBALS['TL_LANG']['tl_settings']['simplify_legend']                   = 'Simpl
 $GLOBALS['TL_LANG']['tl_settings']['simplify_news']                     = array('Simplify news module', 'News without content elements');
 $GLOBALS['TL_LANG']['tl_settings']['simplify_calendar_events']          = array('Simplify calendar module', 'Calendar events without content elements');
 $GLOBALS['TL_LANG']['tl_settings']['simplify_news_teaser']              = array('News module with teaser and news text field', 'News module with teaser and news text field');
-$GLOBALS['TL_LANG']['tl_settings']['simplify_calendar_events_teaser']   = array('Calendar module with teaser and news text field', 'Calendar module with teaser and news text field');
 

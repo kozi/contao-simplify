@@ -14,14 +14,10 @@ if (array_key_exists('simplify_calendar_events', $GLOBALS['TL_CONFIG']) && $GLOB
 	
 // Change link in edit button
 $GLOBALS['TL_DCA']['tl_calendar_events']['list']['operations']['edit']['href'] =
-	$GLOBALS['TL_DCA']['tl_calendar_events']['list']['operations']['editmeta']['href'];
+	$GLOBALS['TL_DCA']['tl_calendar_events']['list']['operations']['editheader']['href'];
  
 // Remove metadata button
-unset($GLOBALS['TL_DCA']['tl_calendar_events']['list']['operations']['editmeta']);
-
-// Change label for teaser text
-// $GLOBALS['TL_LANG']['tl_calendar_events']['teaser'] = $GLOBALS['TL_LANG']['tl_calendar_events']['text'];
-
+unset($GLOBALS['TL_DCA']['tl_calendar_events']['list']['operations']['editheader']);
 
 // Show text in backend row
 $GLOBALS['TL_DCA']['tl_calendar_events']['list']['sorting']['child_record_callback'] =
@@ -31,8 +27,28 @@ $GLOBALS['TL_DCA']['tl_calendar_events']['list']['sorting']['child_record_callba
 class tl_calendar_events_simplify extends tl_calendar_events {
 	
 	public function listEvents($arrRow) {
-		$excerpt = String::substr($arrRow['teaser'], 72);
-		return '<div class="tl_content_left"><strong>' . $arrRow['title'] . '</strong> <span style="color:#b3b3b3;padding-left:3px">[' . $this->parseDate($GLOBALS['TL_CONFIG']['datimFormat'], $arrRow['date']) . ']</span><br>'.
+        $key     = (strlen($arrRow['teaser']) > 0) ? 'teaser' : 'text';
+        $excerpt = String::substr($arrRow[$key], 72);
+
+        $format = $GLOBALS['TL_CONFIG']['dateFormat'];
+        $start  = Date::parse($format, $arrRow['startDate']);
+		$end    = (strlen($arrRow['endDate']) == 0 || $arrRow['endDate'] == $arrRow['startDate']) ? '' : ' - '.Date::parse($format, $arrRow['endDate']);
+
+        $time  = '';
+		if ($arrRow['addTime']) {
+            $startTime = Date::parse($GLOBALS['TL_CONFIG']['timeFormat'], $arrRow['startTime']);
+            $endTime   = Date::parse($GLOBALS['TL_CONFIG']['timeFormat'], $arrRow['endTime']);
+
+            if ($startTime == $endTime) {
+                // only startTime
+                $start .= '&nbsp;'.$startTime;
+            }
+            else {
+                $time = '&nbsp;'.$startTime.'-'.$endTime;
+            }
+		}
+
+		return '<div class="tl_content_left"><strong>' . $arrRow['title'] . '</strong> <span style="color:#b3b3b3;padding-left:3px">[' . $start . $end . $time . ']</span><br>'.
 			$excerpt.'</div>';
 	}
 

@@ -13,7 +13,7 @@
  * @filesource
  */
 
-$GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] .= ';{simplify_legend},simplify_news,simplify_news_teaser,simplify_calendar_events,simplify_calendar_events_teaser';
+$GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] .= ';{simplify_legend},simplify_news,simplify_news_teaser,simplify_calendar_events';
 
 $GLOBALS['TL_DCA']['tl_settings']['fields']['simplify_news'] = array(
 		'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['simplify_news'],
@@ -29,12 +29,6 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['simplify_news_teaser'] = array(
 
 $GLOBALS['TL_DCA']['tl_settings']['fields']['simplify_calendar_events'] = array(
 		'label'		              => &$GLOBALS['TL_LANG']['tl_settings']['simplify_calendar_events'],
-		'inputType'               => 'checkbox',
-		'eval'                    => array('tl_class'=>'w50 m12')
-);
-
-$GLOBALS['TL_DCA']['tl_settings']['fields']['simplify_calendar_events_teaser'] = array(
-		'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['simplify_calendar_events_teaser'],
 		'inputType'               => 'checkbox',
 		'eval'                    => array('tl_class'=>'w50 m12')
 );
