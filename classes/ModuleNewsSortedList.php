@@ -16,7 +16,6 @@ namespace Simplify;
  */
 
 
-
 /**
  * Class ModuleNewsSortedList
  *

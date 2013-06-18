@@ -35,15 +35,19 @@ $GLOBALS['TL_DCA']['tl_news']['config']['onsubmit_callback'][] = array('tl_news_
 
 if (array_key_exists('simplify_news', $GLOBALS['TL_CONFIG']) && $GLOBALS['TL_CONFIG']['simplify_news'] === true) {
 
+$GLOBALS['TL_DCA']['tl_news']['config']['ctable']       = false;
+$GLOBALS['TL_DCA']['tl_news']['config']['switchToEdit'] = false;
+
 // Change link in edit button
-    $GLOBALS['TL_DCA']['tl_news']['list']['operations']['edit']['href'] =
-	$GLOBALS['TL_DCA']['tl_news']['list']['operations']['editheader']['href'];
+
+$GLOBALS['TL_DCA']['tl_news']['list']['operations']['edit']['href'] =
+$GLOBALS['TL_DCA']['tl_news']['list']['operations']['editheader']['href'];
  
 // Remove editheader button
 unset($GLOBALS['TL_DCA']['tl_news']['list']['operations']['editheader']);
 
 // Add text field
-    $GLOBALS['TL_DCA']['tl_news']['fields']['text']          = $GLOBALS['TL_DCA']['tl_news']['fields']['teaser'];
+$GLOBALS['TL_DCA']['tl_news']['fields']['text']          = $GLOBALS['TL_DCA']['tl_news']['fields']['teaser'];
 $GLOBALS['TL_DCA']['tl_news']['fields']['text']['label'] = $GLOBALS['TL_LANG']['tl_news']['text'];
 
 if (array_key_exists('simplify_news_teaser', $GLOBALS['TL_CONFIG']) && $GLOBALS['TL_CONFIG']['simplify_news_teaser'] === true) { 

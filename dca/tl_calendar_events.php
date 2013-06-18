@@ -23,6 +23,7 @@ unset($GLOBALS['TL_DCA']['tl_calendar_events']['list']['operations']['editheader
 $GLOBALS['TL_DCA']['tl_calendar_events']['list']['sorting']['child_record_callback'] =
 	array('tl_calendar_events_simplify', 'listEvents');
 
+} // END if...
 
 class tl_calendar_events_simplify extends tl_calendar_events {
 	
@@ -55,4 +56,3 @@ class tl_calendar_events_simplify extends tl_calendar_events {
 	
 }
 
-} // END if...
