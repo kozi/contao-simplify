@@ -25,9 +25,11 @@ namespace Simplify;
  */
 
 class Simplify extends \Contao\System {
+
     public function parseArticlesHook(&$objTemplate, $row, $newsModule) {
 		global $objPage;
-		if (array_key_exists('simplify_news', $GLOBALS['TL_CONFIG']) && $GLOBALS['TL_CONFIG']['simplify_news'] === true 
+
+		if (array_key_exists('simplify_news', $GLOBALS['TL_CONFIG']) && $GLOBALS['TL_CONFIG']['simplify_news'] === true
 			&& array_key_exists('simplify_news_teaser', $GLOBALS['TL_CONFIG']) && $GLOBALS['TL_CONFIG']['simplify_news_teaser'] === true) {
 			
 			$text = $row['text'];

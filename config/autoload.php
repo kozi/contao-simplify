@@ -13,8 +13,8 @@
 ClassLoader::addNamespace('Simplify');
 
 ClassLoader::addClasses(array(
-	'Simplify\ModuleNewsSortedList'    => 'system/modules/simplify/classes/ModuleNewsSortedList.php',
-	'Simplify\Simplify'                => 'system/modules/simplify/classes/Simplify.php',
+    'Simplify\Simplify'                => 'system/modules/simplify/classes/Simplify.php',
+    'Simplify\ModuleNewsList'          => 'system/modules/simplify/modules/ModuleNewsList.php',
 ));
 
 /*
