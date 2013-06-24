@@ -13,13 +13,22 @@
 
 // Add featured_stop field
 
-
 $GLOBALS['TL_DCA']['tl_news']['fields']['featured_stop'] = array(
     'label'                   => &$GLOBALS['TL_LANG']['tl_news']['featured_stop'],
     'exclude'                 => true,
     'inputType'               => 'text',
     'eval'                    => array('rgxp'=>'datim', 'datepicker'=>true, 'tl_class'=>'w50 wizard'),
     'sql'                     => "varchar(10) NOT NULL default ''"
+);
+
+// Add text field
+$GLOBALS['TL_DCA']['tl_news']['fields']['text']          = array(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_news']['text'],
+    'exclude'                 => true,
+    'search'                  => true,
+    'inputType'               => 'textarea',
+    'eval'                    => array('rte'=>'tinyMCE', 'tl_class'=>'clr'),
+    'sql'                     => "text NULL"
 );
 
 $GLOBALS['TL_DCA']['tl_news']['palettes']['default'] =
@@ -32,6 +41,7 @@ $GLOBALS['TL_DCA']['tl_news']['fields']['featured']['eval']['tl_class']   = 'w50
 $GLOBALS['TL_DCA']['tl_news']['list']['operations']['feature']['button_callback'] = array('tl_news_simplify', 'iconFeatured');
 
 $GLOBALS['TL_DCA']['tl_news']['config']['onsubmit_callback'][] = array('tl_news_simplify', 'checkFeaturedStop');
+
 
 if (array_key_exists('simplify_news', $GLOBALS['TL_CONFIG']) && $GLOBALS['TL_CONFIG']['simplify_news'] === true) {
 
@@ -46,13 +56,9 @@ $GLOBALS['TL_DCA']['tl_news']['list']['operations']['editheader']['href'];
 // Remove editheader button
 unset($GLOBALS['TL_DCA']['tl_news']['list']['operations']['editheader']);
 
-// Add text field
-$GLOBALS['TL_DCA']['tl_news']['fields']['text']          = $GLOBALS['TL_DCA']['tl_news']['fields']['teaser'];
-$GLOBALS['TL_DCA']['tl_news']['fields']['text']['label'] = $GLOBALS['TL_LANG']['tl_news']['text'];
-
-if (array_key_exists('simplify_news_teaser', $GLOBALS['TL_CONFIG']) && $GLOBALS['TL_CONFIG']['simplify_news_teaser'] === true) { 
+if (array_key_exists('simplify_news_teaser', $GLOBALS['TL_CONFIG']) && $GLOBALS['TL_CONFIG']['simplify_news_teaser'] === true) {
 	// Add text field to default palette
-	$GLOBALS['TL_DCA']['tl_news']['palettes']['default'] = str_replace(
+    $GLOBALS['TL_DCA']['tl_news']['palettes']['default'] = str_replace(
 		'{teaser_legend},subheadline,teaser;',
 		'{teaser_legend},subheadline,teaser;{text_legend},text;',
 		$GLOBALS['TL_DCA']['tl_news']['palettes']['default']);
