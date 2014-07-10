@@ -24,16 +24,16 @@ namespace ContaoSimplify;
 
 class SimplifyModuleNewsList extends \ModuleNewsList {
 
+
+
+
     /**
      * Generate the module
      */
     protected function compile()
     {
-
-
         $offset = intval($this->skipFirst);
         $limit = null;
-        $this->Template->articles = array();
 
         // Maximum number of items
         if ($this->numberOfItems > 0)
@@ -55,13 +55,14 @@ class SimplifyModuleNewsList extends \ModuleNewsList {
             $blnFeatured = null;
         }
 
+        $this->Template->articles = array();
+        $this->Template->empty = $GLOBALS['TL_LANG']['MSC']['emptyList'];
+
         // Get the total number of items
         $intTotal = \NewsModel::countPublishedByPids($this->news_archives, $blnFeatured);
 
         if ($intTotal < 1)
         {
-            $this->Template = new \FrontendTemplate('mod_newsarchive_empty');
-            $this->Template->empty = $GLOBALS['TL_LANG']['MSC']['emptyList'];
             return;
         }
 
@@ -95,22 +96,23 @@ class SimplifyModuleNewsList extends \ModuleNewsList {
             // Set limit and offset
             $limit = $this->perPage;
             $offset += (max($page, 1) - 1) * $this->perPage;
+            $skip = intval($this->skipFirst);
 
             // Overall limit
-            if ($offset + $limit > $total)
+            if ($offset + $limit > $total + $skip)
             {
-                $limit = $total - $offset;
+                $limit = $total + $skip - $offset;
             }
 
             // Add the pagination menu
-            $objPagination = new \Pagination($total, $this->perPage, $GLOBALS['TL_CONFIG']['maxPaginationLinks'], $id);
+            $objPagination = new \Pagination($total, $this->perPage, \Config::get('maxPaginationLinks'), $id);
             $this->Template->pagination = $objPagination->generate("\n  ");
         }
 
 
-
+        // Added ##### Added ##### Added ##### Added ##### Added ##### Added ##### Added #####
+        // Added $arrOptions in the both statements below
         $arrOptions = array();
-        // Added
         if ($this->simplify_sorting !== '') {
             $order = str_replace( array('_asc', '_desc'), array(' ASC', ' DESC'), $this->simplify_sorting);
             $arrOptions['order']  = ($order === 'random') ? 'RAND()' : 'tl_news.'.$order;
@@ -125,14 +127,9 @@ class SimplifyModuleNewsList extends \ModuleNewsList {
         {
             $objArticles = \NewsModel::findPublishedByPids($this->news_archives, $blnFeatured, 0, $offset, $arrOptions);
         }
-
-        // No items found
-        if ($objArticles === null)
-        {
-            $this->Template = new \FrontendTemplate('mod_newsarchive_empty');
-            $this->Template->empty = $GLOBALS['TL_LANG']['MSC']['emptyList'];
-        }
-        else
+        
+        // Add the articles
+        if ($objArticles !== null)
         {
             $this->Template->articles = $this->parseArticles($objArticles);
         }
