@@ -1,36 +1,36 @@
 <?php
 
-namespace Simplify;
-
 /**
  * Contao Open Source CMS
  * Copyright (C) 2005-2013 Leo Feyer
  *
  *
  * PHP version 5
- * @copyright  Martin Kozianka 2012-2013 <http://kozianka.de/>
+ * @copyright  Martin Kozianka 2012-2014 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de/>
  * @package    simplify
  * @license    LGPL
  * @filesource
  */
-
+namespace ContaoSimplify;
 
 /**
  * Class ModuleNewsList
  *
- * @copyright  Martin Kozianka 2012
+ * @copyright  Martin Kozianka 2012-2014
  * @author     Martin Kozianka <martin@kozianka.de>
  * @package    Controller
  */
 
-class ModuleNewsList extends \Contao\ModuleNewsList {
+class SimplifyModuleNewsList extends \ModuleNewsList {
 
     /**
      * Generate the module
      */
     protected function compile()
     {
+
+
         $offset = intval($this->skipFirst);
         $limit = null;
         $this->Template->articles = array();

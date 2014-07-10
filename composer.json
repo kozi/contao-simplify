@@ -1,0 +1,46 @@
+{
+    "name": "martin-kozianka/contao-simplify",
+    "description": "Simplify - Simplify the contao news module",
+    "keywords": [
+        "contao",
+        "news",
+        "simplify"
+    ],
+    "type": "contao-module",
+    "license": "LGPL-3.0+",
+    "authors": [
+        {
+            "name": "Martin Kozianka",
+            "email": "martin@kozianka.de",
+            "homepage": "http://kozianka.de",
+            "role": "Developer"
+        }
+    ],  
+    "support": {
+        "email": "martin@kozianka.de",
+        "issues": "https://github.com/kozi/contao-simplify/issues",
+        "irc": "irc://irc.freenode.org/contao.dev",
+        "source": "https://github.com/kozi/contao-simplify"
+    },
+    "autoload": {
+        "psr-0": {
+            "ContaoSimplify": "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.4",
+        "contao/core": "~3.3"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "contao": {
+            "sources": {
+                "contao": "system/modules/simplify"
+            }
+        }
+    },
+    "config": {
+        "component-dir": "../assets/components"
+    }
+}
