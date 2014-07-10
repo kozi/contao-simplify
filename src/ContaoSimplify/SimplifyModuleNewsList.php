@@ -2,7 +2,7 @@
 
 /**
  * Contao Open Source CMS
- * Copyright (C) 2005-2013 Leo Feyer
+ * Copyright (C) 2005-2014 Leo Feyer
  *
  *
  * PHP version 5
@@ -127,7 +127,7 @@ class SimplifyModuleNewsList extends \ModuleNewsList {
         {
             $objArticles = \NewsModel::findPublishedByPids($this->news_archives, $blnFeatured, 0, $offset, $arrOptions);
         }
-        
+
         // Add the articles
         if ($objArticles !== null)
         {
