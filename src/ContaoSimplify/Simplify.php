@@ -37,7 +37,7 @@ class Simplify extends \System {
 		}
 	}
 
-    public function checkFeaturedStop() {
+    public static function checkFeaturedStop() {
 
         $idArray     = array();
         $now         = time();
@@ -54,7 +54,7 @@ class Simplify extends \System {
         if (count($idArray) > 0) {
 
             $ids = implode(',', $idArray);
-            $this->log('Simplify - Check "featured_stop" values (Updated entries: '.$ids.')', 'Simplify checkFeaturedStop()', TL_CRON);
+            static::log('Simplify - Check "featured_stop" values (Updated entries: '.$ids.')', 'Simplify checkFeaturedStop()', TL_CRON);
 
             // Remove featured flag from tl_news entries
             $objDatabase->prepare("UPDATE tl_news SET tstamp = ". $now .", featured = ? WHERE id IN (".$ids.")")

@@ -103,8 +103,7 @@ class tl_news_simplify extends tl_news {
     }
 
     public function checkFeaturedStop() {
-        $this->import('Simplify');
-        $this->Simplify->checkFeaturedStop();
+        \ContaoSimplify\Simplify::checkFeaturedStop();
     }
 
 }
