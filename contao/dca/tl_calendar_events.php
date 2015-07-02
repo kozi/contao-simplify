@@ -49,10 +49,20 @@ class tl_calendar_events_simplify extends tl_calendar_events {
             }
 		}
 
-		return '<div class="tl_content_left"><strong>' . $arrRow['title'] . '</strong> <span style="color:#b3b3b3;padding-left:3px">[' . $start . $end . $time . ']</span><br>'.
+
+        
+        // Small addon for plugin contao-fussball
+        // https://github.com/kozi/contao-fussball        
+        $cssClass = 'tl_content_left';
+        if (array_key_exists('', $arrRow))
+        {            
+            $cssClass .= ($arrRow['fussball_tournament_id'] !== '0') ? ' fussball_event fussball_matches':'';
+            $cssClass .= ($arrRow['fussball_matches_id']    !== '0') ? ' fussball_event fussball_tournament':'';
+        }
+
+		return '<div class="'.$cssClass.'"><strong>' . $arrRow['title'] . '</strong> <span style="color:#b3b3b3;padding-left:3px">[' . $start . $end . $time . ']</span><br>'.
 			$excerpt.'</div>';
 	}
-
 	
 }
 
