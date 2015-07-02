@@ -74,6 +74,7 @@ $GLOBALS['TL_DCA']['tl_news']['list']['sorting']['child_record_callback'] =
 
 } // END if ...
 
+use ContaoSimplify\Simplify;
 
 class tl_news_simplify extends tl_news {
 
@@ -103,7 +104,7 @@ class tl_news_simplify extends tl_news {
     }
 
     public function checkFeaturedStop() {
-        \ContaoSimplify\Simplify::checkFeaturedStop();
+        Simplify::checkFeaturedStop();
     }
 
 }
