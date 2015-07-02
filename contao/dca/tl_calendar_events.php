@@ -49,8 +49,6 @@ class tl_calendar_events_simplify extends tl_calendar_events {
             }
 		}
 
-
-        
         // Small addon for plugin contao-fussball
         // https://github.com/kozi/contao-fussball        
         $cssClass = 'tl_content_left';

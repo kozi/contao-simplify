@@ -62,6 +62,14 @@ class Simplify extends \System {
         }
     }
 
+    public function newsListFetchItems($newsArchives, $blnFeatured, $limit, $offset, $newsListModule)
+    {
+        $arrOptions = array();
+        if ($this->simplify_sorting !== '') {
+            $order = str_replace( array('_asc', '_desc'), array(' ASC', ' DESC'), $newsListModule->simplify_sorting);
+            $arrOptions['order']  = ($order === 'random') ? 'RAND()' : 'tl_news.'.$order;
+        }
+
+        return \NewsModel::findPublishedByPids($newsArchives, $blnFeatured, $limit, $offset, $arrOptions);
+    }
 }
-
-

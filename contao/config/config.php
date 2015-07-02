@@ -11,8 +11,7 @@
  * @filesource
  */
 
-$GLOBALS['FE_MOD']['news']['newslist']              = 'ContaoSimplify\SimplifyModuleNewsList';
+$GLOBALS['TL_CRON']['hourly'][]                        = ['\ContaoSimplify\Simplify', 'checkFeaturedStop'];
 
-$GLOBALS['TL_CRON']['hourly'][]                     = array('ContaoSimplify\Simplify', 'checkFeaturedStop');
-$GLOBALS['TL_HOOKS']['parseArticles']['simplify']   = array('ContaoSimplify\Simplify', 'parseArticlesHook');
-
+$GLOBALS['TL_HOOKS']['parseArticles']['simplify']      = ['\ContaoSimplify\Simplify', 'parseArticlesHook'];
+$GLOBALS['TL_HOOKS']['newsListFetchItems']['simplify'] = ['\ContaoSimplify\Simplify', 'newsListFetchItems'];
