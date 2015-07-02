@@ -62,11 +62,11 @@ class Simplify extends \System {
         }
     }
 
-    public function newsListFetchItems($newsArchives, $blnFeatured, $limit, $offset, $newsListModule)
+    public function newsListFetchItems($newsArchives, $blnFeatured, $limit, $offset, $module)
     {
         $arrOptions = array();
-        if ($this->simplify_sorting !== '') {
-            $order = str_replace( array('_asc', '_desc'), array(' ASC', ' DESC'), $newsListModule->simplify_sorting);
+        if ($module !== null && $module->simplify_sorting !== null && $module->simplify_sorting != '') {
+            $order = str_replace( array('_asc', '_desc'), array(' ASC', ' DESC'), $module->simplify_sorting);
             $arrOptions['order']  = ($order === 'random') ? 'RAND()' : 'tl_news.'.$order;
         }
 
