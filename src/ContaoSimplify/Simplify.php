@@ -22,23 +22,26 @@ namespace ContaoSimplify;
  * @package    Controller
  */
 
+
+use Contao\NewsArchiveModel;
+
 class Simplify extends \System {
 
-    public function parseArticlesHook(&$objTemplate, $row, $newsModule) {
+    public function parseArticlesHook(&$objTemplate, $row, $newsModule)
+    {
 		global $objPage;
 
-		if (array_key_exists('simplify_news', $GLOBALS['TL_CONFIG']) && $GLOBALS['TL_CONFIG']['simplify_news'] === true
-			&& array_key_exists('simplify_news_teaser', $GLOBALS['TL_CONFIG']) && $GLOBALS['TL_CONFIG']['simplify_news_teaser'] === true) {
-			
-			$text = $row['text'];
-			$text = ($objPage->outputFormat == 'xhtml') ? \String::toXhtml($text) : \String::toHtml5($text);
-			$objTemplate->text = \String::encodeEmail($text);
-			
-		}
+        $objArchive = NewsArchiveModel::findByPk($row['pid']);
+        if ($objArchive !== null && $objArchive->simplify == '1' && $objArchive->simplify_news_teaser == '1')
+        {
+            $text = $row['text'];
+            $text = ($objPage->outputFormat == 'xhtml') ? \String::toXhtml($text) : \String::toHtml5($text);
+            $objTemplate->text = \String::encodeEmail($text);
+        }
 	}
 
-    public static function checkFeaturedStop() {
-
+    public static function checkFeaturedStop()
+    {
         $idArray     = array();
         $now         = time();
         $objDatabase = \Database::getInstance();
@@ -47,12 +50,13 @@ class Simplify extends \System {
         $result = $objDatabase->prepare('SELECT id FROM tl_news WHERE featured = ? AND featured_stop != ? AND featured_stop < ?')
                     ->execute('1', '', $now);
 
-        while ($result->next()) {
+        while ($result->next())
+        {
             $idArray[] = $result->id;
         }
 
-        if (count($idArray) > 0) {
-
+        if (count($idArray) > 0)
+        {
             $ids = implode(',', $idArray);
             static::log('Simplify - Check "featured_stop" values (Updated entries: '.$ids.')', 'Simplify checkFeaturedStop()', TL_CRON);
 
@@ -65,11 +69,11 @@ class Simplify extends \System {
     public function newsListFetchItems($newsArchives, $blnFeatured, $limit, $offset, $module)
     {
         $arrOptions = array();
-        if ($module !== null && $module->simplify_sorting !== null && $module->simplify_sorting != '') {
+        if ($module !== null && $module->simplify_sorting !== null && $module->simplify_sorting != '')
+        {
             $order = str_replace( array('_asc', '_desc'), array(' ASC', ' DESC'), $module->simplify_sorting);
             $arrOptions['order']  = ($order === 'random') ? 'RAND()' : 'tl_news.'.$order;
         }
-
         return \NewsModel::findPublishedByPids($newsArchives, $blnFeatured, $limit, $offset, $arrOptions);
     }
 }

@@ -34,14 +34,14 @@ class tl_module_simplify_sorted_news extends Backend {
 	public function getSortingOptions() {
 		
 		$this->loadLanguageFile('tl_news');
-		
-		$attribs = array('headline','date','author','subheadline');
-		$options = array(''  => '-');
+
+		$attribs = ['headline','date','author','subheadline'];
+		$options = [''  => '-'];
 		foreach($attribs as $a) {
 			$options[$a.'_asc']  = $GLOBALS['TL_LANG']['tl_news'][$a][0].' '.$GLOBALS['TL_LANG']['tl_module']['simplify_sorting_asc'];
 			$options[$a.'_desc'] = $GLOBALS['TL_LANG']['tl_news'][$a][0].' '.$GLOBALS['TL_LANG']['tl_module']['simplify_sorting_desc'];
 		}
-		
+
 		$options['random'] = $GLOBALS['TL_LANG']['tl_module']['simplify_sorting_random'];
 		return $options;		
 	}

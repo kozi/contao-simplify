@@ -15,3 +15,9 @@ $GLOBALS['TL_CRON']['hourly'][]                        = ['\ContaoSimplify\Simpl
 
 $GLOBALS['TL_HOOKS']['parseArticles']['simplify']      = ['\ContaoSimplify\Simplify', 'parseArticlesHook'];
 $GLOBALS['TL_HOOKS']['newsListFetchItems']['simplify'] = ['\ContaoSimplify\Simplify', 'newsListFetchItems'];
+
+
+if(TL_MODE === 'BE')
+{
+    $GLOBALS['TL_CSS'][] = 'system/modules/simplify/assets/be_style.css|static';
+}

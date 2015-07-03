@@ -10,56 +10,50 @@
  * @license    LGPL
  * @filesource
  */
-if (array_key_exists('simplify_calendar_events', $GLOBALS['TL_CONFIG']) && $GLOBALS['TL_CONFIG']['simplify_calendar_events'] === true) {
-	
-// Change link in edit button
-$GLOBALS['TL_DCA']['tl_calendar_events']['list']['operations']['edit']['href'] =
-	$GLOBALS['TL_DCA']['tl_calendar_events']['list']['operations']['editheader']['href'];
- 
-// Remove metadata button
-unset($GLOBALS['TL_DCA']['tl_calendar_events']['list']['operations']['editheader']);
 
-// Show text in backend row
-$GLOBALS['TL_DCA']['tl_calendar_events']['list']['sorting']['child_record_callback'] =
-	array('tl_calendar_events_simplify', 'listEvents');
+$GLOBALS['TL_DCA']['tl_calendar_events']['config']['onload_callback'][] = ['tl_calendar_events_simplify', 'adjustDca'];
 
-} // END if...
+use Contao\CalendarModel;
 
 class tl_calendar_events_simplify extends tl_calendar_events {
-	
-	public function listEvents($arrRow) {
-        $key     = (strlen($arrRow['teaser']) > 0) ? 'teaser' : 'text';
-        $excerpt = String::substr($arrRow[$key], 72);
 
-        $format = $GLOBALS['TL_CONFIG']['dateFormat'];
-        $start  = Date::parse($format, $arrRow['startDate']);
-		$end    = (strlen($arrRow['endDate']) == 0 || $arrRow['endDate'] == $arrRow['startDate']) ? '' : ' - '.Date::parse($format, $arrRow['endDate']);
+    public function adjustDca($dc)
+    {
+        $objCal = CalendarModel::findByPk($dc->id);
+        if ($objCal !== null && $objCal->simplify === '1')
+        {
+            $list = &$GLOBALS['TL_DCA']['tl_calendar_events']['list'];
 
-        $time  = '';
-		if ($arrRow['addTime']) {
-            $startTime = Date::parse($GLOBALS['TL_CONFIG']['timeFormat'], $arrRow['startTime']);
-            $endTime   = Date::parse($GLOBALS['TL_CONFIG']['timeFormat'], $arrRow['endTime']);
+            // Change link in edit button
+            $list['operations']['edit']['href'] = $list['operations']['editheader']['href'];
 
-            if ($startTime == $endTime) {
-                // only startTime
-                $start .= '&nbsp;'.$startTime;
-            }
-            else {
-                $time = '&nbsp;'.$startTime.'-'.$endTime;
-            }
-		}
+            // Remove metadata button
+            unset($list['operations']['editheader']);
 
-        // Small addon for plugin contao-fussball
-        // https://github.com/kozi/contao-fussball        
-        $cssClass = 'tl_content_left';
+            // Show text in backend row
+            $list['sorting']['child_record_callback'] = ['tl_calendar_events_simplify', 'listEvents'];
+        }
+    }
+
+    public function listEvents($arrRow) {
+        $strResult = parent::listEvents($arrRow);
+
+        $key       = (strlen($arrRow['teaser']) > 0) ? 'teaser' : 'text';
+        $excerpt   = '<br><span>'.String::substr($arrRow[$key], 72).'</span></div>';
+
+        $pos       = strrpos($strResult, '</div>');
+        $strResult = ($pos !== false) ? substr_replace($strResult, $excerpt, $pos, strlen('</div>')) : $strResult;
+
+        // Small addon for plugin contao-fussball (https://github.com/kozi/contao-fussball)
+        $cssClass = 'tl_content_left simplify';
         if (array_key_exists('fussball_matches_id', $arrRow))
         {            
             $cssClass .= ($arrRow['fussball_matches_id']    !== '0') ? ' fussball_event fussball_matches':'';
             $cssClass .= ($arrRow['fussball_tournament_id'] !== '0') ? ' fussball_event fussball_tournament':'';
+            $strResult = str_replace('tl_content_left', $cssClass, $strResult);
         }
 
-		return '<div class="'.$cssClass.'"><strong>' . $arrRow['title'] . '</strong> <span style="color:#b3b3b3;padding-left:3px">[' . $start . $end . $time . ']</span><br>'.
-			$excerpt.'</div>';
+        return $strResult;
 	}
 	
 }

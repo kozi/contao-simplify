@@ -11,74 +11,46 @@
  * @filesource
  */
 
-// Add featured_stop field
+$tlNews = &$GLOBALS['TL_DCA']['tl_news'];
 
-$GLOBALS['TL_DCA']['tl_news']['fields']['featured_stop'] = array(
+// Add featured_stop field
+$tlNews['fields']['featured_stop'] = [
     'label'                   => &$GLOBALS['TL_LANG']['tl_news']['featured_stop'],
     'exclude'                 => true,
     'inputType'               => 'text',
     'eval'                    => array('rgxp'=>'datim', 'datepicker'=>true, 'tl_class'=>'w50 wizard'),
     'sql'                     => "varchar(10) NOT NULL default ''"
-);
+];
 
 // Add text field
-$GLOBALS['TL_DCA']['tl_news']['fields']['text']          = array(
+$tlNews['fields']['text'] = [
     'label'                   => &$GLOBALS['TL_LANG']['tl_news']['text'],
     'exclude'                 => true,
     'search'                  => true,
     'inputType'               => 'textarea',
     'eval'                    => array('rte'=>'tinyMCE', 'tl_class'=>'clr'),
     'sql'                     => "text NULL"
-);
+];
 
-$GLOBALS['TL_DCA']['tl_news']['palettes']['default'] =
-    str_replace(',featured' , ',featured,featured_stop', $GLOBALS['TL_DCA']['tl_news']['palettes']['default']);
+$tlNews['palettes']['default'] = str_replace(',featured' , ',featured,featured_stop', $tlNews['palettes']['default']);
 
-$GLOBALS['TL_DCA']['tl_news']['fields']['cssClass']['eval'] = array('tl_class' => 'w50');
-$GLOBALS['TL_DCA']['tl_news']['fields']['noComments']['eval']['tl_class'] = 'w50 m12';
-$GLOBALS['TL_DCA']['tl_news']['fields']['featured']['eval']['tl_class']   = 'w50 m12';
+$tlNews['config']['onload_callback'][]                      = ['tl_news_simplify', 'adjustDca'];
+$tlNews['config']['onsubmit_callback'][]                    = ['tl_news_simplify', 'checkFeaturedStop'];
+$tlNews['config']['onsubmit_callback'][]                    = ['tl_news_simplify', 'checkFeaturedStop'];
+$tlNews['list']['operations']['feature']['button_callback'] = ['tl_news_simplify', 'iconFeatured'];
 
-$GLOBALS['TL_DCA']['tl_news']['list']['operations']['feature']['button_callback'] = array('tl_news_simplify', 'iconFeatured');
+$tlNews['fields']['cssClass']['eval']                       = ['tl_class' => 'w50'];
+$tlNews['fields']['noComments']['eval']['tl_class']         = 'w50 m12';
+$tlNews['fields']['featured']['eval']['tl_class']           = 'w50 m12';
 
-$GLOBALS['TL_DCA']['tl_news']['config']['onsubmit_callback'][] = array('tl_news_simplify', 'checkFeaturedStop');
-
-
-if (array_key_exists('simplify_news', $GLOBALS['TL_CONFIG']) && $GLOBALS['TL_CONFIG']['simplify_news'] === true) {
-
-$GLOBALS['TL_DCA']['tl_news']['config']['ctable']       = false;
-$GLOBALS['TL_DCA']['tl_news']['config']['switchToEdit'] = false;
-
-// Change link in edit button
-
-$GLOBALS['TL_DCA']['tl_news']['list']['operations']['edit']['href'] =
-$GLOBALS['TL_DCA']['tl_news']['list']['operations']['editheader']['href'];
- 
-// Remove editheader button
-unset($GLOBALS['TL_DCA']['tl_news']['list']['operations']['editheader']);
-
-if (array_key_exists('simplify_news_teaser', $GLOBALS['TL_CONFIG']) && $GLOBALS['TL_CONFIG']['simplify_news_teaser'] === true) {
-	// Add text field to default palette
-    $GLOBALS['TL_DCA']['tl_news']['palettes']['default'] = str_replace(
-		'{teaser_legend},subheadline,teaser;',
-		'{teaser_legend},subheadline,teaser;{text_legend},text;',
-		$GLOBALS['TL_DCA']['tl_news']['palettes']['default']);
-}
-else {
-	$GLOBALS['TL_DCA']['tl_news']['fields']['teaser']['label'] = $GLOBALS['TL_LANG']['tl_news']['text'];
-}
-
-
-// Show text in backend row
-$GLOBALS['TL_DCA']['tl_news']['list']['sorting']['child_record_callback'] =
-	array('tl_news_simplify', 'listNewsArticles');
-
-} // END if ...
-
+use Contao\NewsArchiveModel;
+use Contao\NewsModel;
 use ContaoSimplify\Simplify;
 
 class tl_news_simplify extends tl_news {
 
-    public function listNewsArticles($arrRow) {
+    public function listNewsArticles($arrRow)
+    {
 		$key     = (strlen($arrRow['teaser']) > 0) ? 'teaser' : 'text';
 		$excerpt = String::substr($arrRow[$key], 72);
 
@@ -107,9 +79,46 @@ class tl_news_simplify extends tl_news {
         Simplify::checkFeaturedStop();
     }
 
+    public function adjustDca($dc)
+    {
+        $objArchive = NewsArchiveModel::findByPk($dc->id);
+        if ($objArchive === null) {
+
+            $objNews = NewsModel::findByPk($dc->id);
+            if ($objNews !== null) {
+                $objArchive = NewsArchiveModel::findByPk($objNews->pid);
+            }
+        }
+
+        if ($objArchive !== null && $objArchive->simplify === '1')
+        {
+            $tlNews = &$GLOBALS['TL_DCA']['tl_news'];
+
+            $tlNews['config']['ctable']       = false;
+            $tlNews['config']['switchToEdit'] = false;
+
+            // Change link in edit button
+            $tlNews['list']['operations']['edit']['href'] = $tlNews['list']['operations']['editheader']['href'];
+
+            // Remove editheader button
+            unset($tlNews['list']['operations']['editheader']);
+
+            if ($objArchive->simplify_news_teaser === '1')
+            {
+                // Add text field to default palette
+                $tlNews['palettes']['default'] = str_replace(
+                    '{teaser_legend},subheadline,teaser;',
+                    '{teaser_legend},subheadline,teaser;{text_legend},text;',
+                    $tlNews['palettes']['default']);
+            }
+            else
+            {
+                $tlNews['fields']['teaser']['label'] = $GLOBALS['TL_LANG']['tl_news']['text'];
+            }
+
+            // Show text in backend row
+            $tlNews['list']['sorting']['child_record_callback'] = ['tl_news_simplify', 'listNewsArticles'];
+        }
+    }
+
 }
-
-
-
-
-

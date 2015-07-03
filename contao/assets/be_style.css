@@ -1,0 +1,15 @@
+/*
+ * contao-simplify
+ * http://kozianka.de/
+ * Copyright (c) 2012-2015 Martin Kozianka
+ *
+ */
+
+.tl_content_left.simplify
+{
+    font-weight: bold;
+}
+.tl_content_left.simplify > span
+{
+    font-weight: normal;
+}
