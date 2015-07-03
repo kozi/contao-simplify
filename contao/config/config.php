@@ -19,5 +19,5 @@ $GLOBALS['TL_HOOKS']['newsListFetchItems']['simplify'] = ['\ContaoSimplify\Simpl
 
 if(TL_MODE === 'BE')
 {
-    $GLOBALS['TL_CSS'][] = 'system/modules/simplify/assets/be_style.css|static';
+    $GLOBALS['TL_CSS'][] = 'system/modules/simplify/assets/be_style.css||static';
 }
