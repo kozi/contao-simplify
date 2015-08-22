@@ -35,7 +35,8 @@ class tl_calendar_events_simplify extends tl_calendar_events {
         }
     }
 
-    public function listEvents($arrRow) {
+    public function listEvents($arrRow)
+    {
         $strResult = parent::listEvents($arrRow);
 
         $key       = (strlen($arrRow['teaser']) > 0) ? 'teaser' : 'text';
@@ -57,4 +58,3 @@ class tl_calendar_events_simplify extends tl_calendar_events {
 	}
 	
 }
-

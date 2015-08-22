@@ -18,7 +18,7 @@ $tlNews['fields']['featured_stop'] = [
     'label'                   => &$GLOBALS['TL_LANG']['tl_news']['featured_stop'],
     'exclude'                 => true,
     'inputType'               => 'text',
-    'eval'                    => array('rgxp'=>'datim', 'datepicker'=>true, 'tl_class'=>'w50 wizard'),
+    'eval'                    => ['rgxp'=>'datim', 'datepicker'=>true, 'tl_class'=>'w50 wizard'],
     'sql'                     => "varchar(10) NOT NULL default ''"
 ];
 
@@ -28,7 +28,7 @@ $tlNews['fields']['text'] = [
     'exclude'                 => true,
     'search'                  => true,
     'inputType'               => 'textarea',
-    'eval'                    => array('rte'=>'tinyMCE', 'tl_class'=>'clr'),
+    'eval'                    => ['rte'=>'tinyMCE', 'tl_class'=>'clr'],
     'sql'                     => "text NULL"
 ];
 
@@ -47,7 +47,8 @@ use Contao\NewsArchiveModel;
 use Contao\NewsModel;
 use ContaoSimplify\Simplify;
 
-class tl_news_simplify extends tl_news {
+class tl_news_simplify extends tl_news
+{
 
     public function listNewsArticles($arrRow)
     {

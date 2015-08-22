@@ -25,8 +25,8 @@ namespace ContaoSimplify;
 
 use Contao\NewsArchiveModel;
 
-class Simplify extends \System {
-
+class Simplify extends \System
+{
     public function parseArticlesHook(&$objTemplate, $row, $newsModule)
     {
 		global $objPage;
@@ -42,36 +42,35 @@ class Simplify extends \System {
 
     public static function checkFeaturedStop()
     {
-        $idArray     = array();
-        $now         = time();
-        $objDatabase = \Database::getInstance();
+        $idArr = [];
+        $now   = time();
+        $db    = \Database::getInstance();
 
         // Search for tl_news entries with featured_stop date in the past
-        $result = $objDatabase->prepare('SELECT id FROM tl_news WHERE featured = ? AND featured_stop != ? AND featured_stop < ?')
+        $result = $db->prepare('SELECT id FROM tl_news WHERE featured = ? AND featured_stop != ? AND featured_stop < ?')
                     ->execute('1', '', $now);
 
         while ($result->next())
         {
-            $idArray[] = $result->id;
+            $idArr[] = $result->id;
         }
 
-        if (count($idArray) > 0)
+        if (count($idArr) > 0)
         {
-            $ids = implode(',', $idArray);
+            $ids = implode(',', $idArr);
             static::log('Simplify - Check "featured_stop" values (Updated entries: '.$ids.')', 'Simplify checkFeaturedStop()', TL_CRON);
 
             // Remove featured flag from tl_news entries
-            $objDatabase->prepare("UPDATE tl_news SET tstamp = ". $now .", featured = ? WHERE id IN (".$ids.")")
-                ->execute('');
+            $db->prepare("UPDATE tl_news SET tstamp = ". $now .", featured = ? WHERE id IN (".$ids.")")->execute('');
         }
     }
 
     public function newsListFetchItems($newsArchives, $blnFeatured, $limit, $offset, $module)
     {
-        $arrOptions = array();
+        $arrOptions = [];
         if ($module !== null && $module->simplify_sorting !== null && $module->simplify_sorting != '')
         {
-            $order = str_replace( array('_asc', '_desc'), array(' ASC', ' DESC'), $module->simplify_sorting);
+            $order = str_replace( ['_asc', '_desc'], [' ASC', ' DESC'], $module->simplify_sorting);
             $arrOptions['order']  = ($order === 'random') ? 'RAND()' : 'tl_news.'.$order;
         }
         return \NewsModel::findPublishedByPids($newsArchives, $blnFeatured, $limit, $offset, $arrOptions);

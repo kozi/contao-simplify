@@ -11,11 +11,9 @@
  * @filesource
  */
 
-$GLOBALS['TL_CRON']['hourly'][]                        = ['\ContaoSimplify\Simplify', 'checkFeaturedStop'];
-
 $GLOBALS['TL_HOOKS']['parseArticles']['simplify']      = ['\ContaoSimplify\Simplify', 'parseArticlesHook'];
 $GLOBALS['TL_HOOKS']['newsListFetchItems']['simplify'] = ['\ContaoSimplify\Simplify', 'newsListFetchItems'];
-
+$GLOBALS['TL_CRON']['hourly'][]                        = ['\ContaoSimplify\Simplify', 'checkFeaturedStop'];
 
 if(TL_MODE === 'BE')
 {
