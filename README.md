@@ -7,10 +7,10 @@ Simplify the news and event module. Use both modules without content elements.
 + Option to feature a news entry till a specific date (featured_till)
 
 ### Settings Screenshot
-![Settings Screenshot](http://kozianka.de/files/extensions/simplify-screenshot-01.png)
+![Settings Screenshot](http://kozianka.de/files/extensions/contao-simplify-screenshot-01.png)
 
 ### News entry - Feature till
-![Settings Screenshot](http://kozianka.de/files/extensions/simplify-screenshot-02.png)
+![Settings Screenshot](http://kozianka.de/files/extensions/contao-simplify-screenshot-02.png)
 
 ### Newslist - Sorting option
-![Settings Screenshot](http://kozianka.de/files/extensions/simplify-screenshot-03.png)
+![Settings Screenshot](http://kozianka.de/files/extensions/contao-simplify-screenshot-03.png)
