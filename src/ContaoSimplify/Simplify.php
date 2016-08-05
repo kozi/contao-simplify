@@ -35,8 +35,8 @@ class Simplify extends \System
         if ($objArchive !== null && $objArchive->simplify == '1' && $objArchive->simplify_news_teaser == '1')
         {
             $text = $row['text'];
-            $text = ($objPage->outputFormat == 'xhtml') ? \String::toXhtml($text) : \String::toHtml5($text);
-            $objTemplate->text = \String::encodeEmail($text);
+            $text = ($objPage->outputFormat == 'xhtml') ? \StringUtil::toXhtml($text) : \StringUtil::toHtml5($text);
+            $objTemplate->text = \StringUtil::encodeEmail($text);
         }
 	}
 
