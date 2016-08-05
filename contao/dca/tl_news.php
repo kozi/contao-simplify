@@ -53,7 +53,7 @@ class tl_news_simplify extends tl_news
     public function listNewsArticles($arrRow)
     {
 		$key     = (strlen($arrRow['teaser']) > 0) ? 'teaser' : 'text';
-		$excerpt = String::substr($arrRow[$key], 72);
+		$excerpt = StringUtil::substr($arrRow[$key], 72);
 
         $featured_stop_info = '';
         if ($arrRow['featured_stop'] != '') {
