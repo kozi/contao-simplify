@@ -40,7 +40,7 @@ class tl_calendar_events_simplify extends tl_calendar_events {
         $strResult = parent::listEvents($arrRow);
 
         $key       = (strlen($arrRow['teaser']) > 0) ? 'teaser' : 'text';
-        $excerpt   = '<br><span>'.String::substr($arrRow[$key], 72).'</span></div>';
+        $excerpt   = '<br><span>'.StringUtil::substr($arrRow[$key], 72).'</span></div>';
 
         $pos       = strrpos($strResult, '</div>');
         $strResult = ($pos !== false) ? substr_replace($strResult, $excerpt, $pos, strlen('</div>')) : $strResult;
