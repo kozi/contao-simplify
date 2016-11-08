@@ -1,12 +1,10 @@
 <?php
 
 /**
- * Contao Open Source CMS
- * Copyright (C) 2005-2015 Leo Feyer
  *
+ * Contao extension simplify
  *
- * PHP version 5
- * @copyright  Martin Kozianka 2012-2015 <http://kozianka.de/>
+ * @copyright  Martin Kozianka 2012-2016 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de/>
  * @package    simplify
  * @license    LGPL
@@ -17,21 +15,17 @@ namespace ContaoSimplify;
 /**
  * Class Simplify
  *
- * @copyright  Martin Kozianka 2012-2015 <http://kozianka.de/>
+ * @copyright  Martin Kozianka 2012-2016 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de/>
  * @package    Controller
  */
-
-
-use Contao\NewsArchiveModel;
-
 class Simplify extends \System
 {
     public function parseArticlesHook(&$objTemplate, $row, $newsModule)
     {
 		global $objPage;
 
-        $objArchive = NewsArchiveModel::findByPk($row['pid']);
+        $objArchive = \NewsArchiveModel::findByPk($row['pid']);
         if ($objArchive !== null && $objArchive->simplify == '1' && $objArchive->simplify_news_teaser == '1')
         {
             $text = $row['text'];

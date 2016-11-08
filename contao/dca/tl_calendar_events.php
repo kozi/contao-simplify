@@ -4,7 +4,7 @@
  *
  * Contao extension simplify
  *
- * @copyright  Martin Kozianka 2012-2015 <http://kozianka.de/>
+ * @copyright  Martin Kozianka 2012-2016 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de/>
  * @package    simplify
  * @license    LGPL
@@ -15,8 +15,8 @@ $GLOBALS['TL_DCA']['tl_calendar_events']['config']['onload_callback'][] = ['tl_c
 
 use Contao\CalendarModel;
 
-class tl_calendar_events_simplify extends tl_calendar_events {
-
+class tl_calendar_events_simplify extends tl_calendar_events
+{
     public function adjustDca($dc)
     {
         $objCal = CalendarModel::findByPk($dc->id);

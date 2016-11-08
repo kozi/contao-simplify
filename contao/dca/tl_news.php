@@ -4,7 +4,7 @@
  *
  * Contao extension simplify
  *
- * @copyright  Martin Kozianka 2012-2015 <http://kozianka.de/>
+ * @copyright  Martin Kozianka 2012-2016 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de/>
  * @package    simplify
  * @license    LGPL
