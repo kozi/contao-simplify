@@ -28,9 +28,8 @@
         }
     },
     "require": {
-        "contao-community-alliance/composer-plugin": "~2",
-        "php": ">=5.5",
-        "contao/core": ">=3.5"
+        "contao/core-bundle": "~3.5 || ~4.4",
+        "contao-community-alliance/composer-plugin": "~2.4 || ~3.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -40,8 +39,5 @@
                 "contao": "system/modules/simplify"
             }
         }
-    },
-    "config": {
-        "component-dir": "../assets/components"
     }
 }

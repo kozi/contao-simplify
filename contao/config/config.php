@@ -4,7 +4,7 @@
  *
  * Contao extension simplify
  *
- * @copyright  Martin Kozianka 2012-2016 <http://kozianka.de/>
+ * @copyright  Martin Kozianka 2012-2017
  * @author     Martin Kozianka <http://kozianka.de/>
  * @package    simplify
  * @license    LGPL
@@ -17,5 +17,8 @@ $GLOBALS['TL_CRON']['hourly'][]                        = ['\ContaoSimplify\Simpl
 
 if(TL_MODE === 'BE')
 {
-    $GLOBALS['TL_CSS'][] = 'system/modules/simplify/assets/be_style.css||static';
+    $GLOBALS['TL_MOOTOOLS'][] = "<style>"
+        .".tl_content_left.simplify { font-weight: bold; }"
+        .".tl_content_left.simplify > span { font-weight: normal; }"
+    ."<style>";
 }
